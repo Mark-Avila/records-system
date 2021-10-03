@@ -21,8 +21,8 @@ private:
 public:
 	//Constructor
 	Records();
-	void insertRecords(std::string name, float score_1, float score_2, float score_3);
-	void deleteRecords();
+	bool insertRecords(std::string name, float score_1, float score_2, float score_3);
+	bool deleteRecords(int record_id);
 	void updateRecords();
 	void printRecords();
 

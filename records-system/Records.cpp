@@ -1,5 +1,6 @@
 #include <Random>
 #include <iostream>
+#include <string>
 #include "Records.h"
 
 Records::Records()
@@ -16,7 +17,11 @@ Records::Records()
 /// <param name="score_1"> - First score of student</param>
 /// <param name="score_2"> - Second score</param>
 /// <param name="score_3"> - Third score</param>
-void Records::insertRecords(std::string name, float score_1, float score_2, float score_3)
+/// <returns> 
+/// boolean value - return true if inserted to existing node, 
+/// false if a new node was created  
+/// </returns>
+bool Records::insertRecords(std::string name, float score_1, float score_2, float score_3)
 {
 	nodePtr newNode = new node;
 
@@ -44,13 +49,36 @@ void Records::insertRecords(std::string name, float score_1, float score_2, floa
 
 		//Assign new node to the end of the list
 		current->next = newNode;
+
+		return true;
 	}
 	else
 	{
 		//Assign new node to the head if list is empty
 		head = newNode;
+
+		return false;
 	}
 }
+
+//bool Records::deleteRecords(int student_id)
+//{
+//	nodePtr previous = new node;
+//	current = head;
+//
+//	while (current != NULL)
+//	{
+//		if (current->id == student_id)
+//		{
+//			previous
+//		}
+//
+//		current = current->next;
+//	}
+//
+//	//Default return value
+//	return false;
+//}
 
 void Records::printRecords()
 {
