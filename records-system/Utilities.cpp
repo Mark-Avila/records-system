@@ -44,9 +44,24 @@ bool Utilities::inputFloat(float* number)
 	}
 }
 
-void Utilities::pauseScreen(std::string* temp)
+bool Utilities::inputInt(int* number)
 {
+	if (std::cin >> *number)
+	{
+		return true;
+	}
+	else
+	{
+		std::cin.clear(); // reset failbit
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		return false;
+	}
+}
+
+void Utilities::pauseScreen()
+{
+	std::string temp;
 	std::cout << "\nPress any key to continue: ";
 	std::cin.ignore();
-	std::getline(std::cin, *temp);
+	std::getline(std::cin, temp);
 }

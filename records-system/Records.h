@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
+#include "Utilities.h"
 
-class Records
+class Records : public Utilities
 {
 private:
 
@@ -22,9 +23,11 @@ public:
 	//Constructor
 	Records();
 	bool insertRecords(std::string name, float score_1, float score_2, float score_3);
+	bool displayRecord(int record_id);
 	bool deleteRecords(int record_id);
-	void updateRecords();
+	bool updateRecords(int record_id);
 	void printRecords();
+	int locateId(int id);
 
 	//Miscelleneous function
 	int generateId();

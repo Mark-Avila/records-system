@@ -31,8 +31,15 @@ public:
 	bool inputFloat(float *number);
 
 	/// <summary>
+	/// Checks if user input is of type int
+	/// </summary>
+	/// <param name="number"> - int number to be checked</param>
+	/// <returns> - True if input is of data type int, otherwise false</returns>
+	bool inputInt(int* number);
+
+	/// <summary>
 	/// Pauses/stops the console screen
 	/// </summary>
 	/// <param name="temp"> - Pointer for dummy variable for storing input</param>
-	void pauseScreen(std::string *temp);
+	void pauseScreen();
 };

@@ -61,27 +61,121 @@ bool Records::insertRecords(std::string name, float score_1, float score_2, floa
 	}
 }
 
-//bool Records::deleteRecords(int student_id)
-//{
-//	nodePtr previous = new node;
-//	current = head;
-//
-//	while (current != NULL)
-//	{
-//		if (current->id == student_id)
-//		{
-//			previous
-//		}
-//
-//		current = current->next;
-//	}
-//
-//	//Default return value
-//	return false;
-//}
+bool Records::deleteRecords(int student_id)
+{
+	nodePtr previous, current;
+
+	//Linked list is empty
+	if (!head)
+	{
+		return false;
+	}
+
+	//First element is the element to delete
+	else if (head->id == student_id)
+	{
+		current = head->next;
+		delete	head;
+		head = current;
+		return true;
+
+	}
+	else
+	{
+		//Initialize current node to the head/start
+		current = head;
+		previous = NULL;
+
+		//Traverse through the list
+		while (current != NULL && current->id != student_id)
+		{
+			previous = current;
+			current = current->next;
+		}
+
+		//Traverse through the list
+		if (current != NULL)
+		{
+			previous->next = current->next;
+			delete current;
+			return true;
+		}
+	}
+
+	//Default return value
+	return false;
+}
+
+bool Records::updateRecords(int record_id)
+{
+	Utilities utils;
+
+	if (!head)
+	{
+		//Linked list is empty
+		return false;
+	}
+
+	nodePtr current = head;
+	bool exists = false;
+
+	while (current != NULL)
+	{
+		if (current->id == record_id)
+		{
+			exists = true;
+			int choice;
+			float newScore;
+
+			std::cout << "\nStudent record found!\n";
+
+			displayRecord(record_id);
+			
+			std::cout << "\nEnter score to update [1-3]: ";
+			if (!utils.inputInt(&choice))
+			{
+				exists = false;
+				std::cout << "\nInvalid input, operation aborted";
+				break;
+			}
+			
+			std::cout << "\nEnter new value for score " << choice << ": ";
+			if (!utils.inputFloat(&newScore))
+			{
+				exists = false;
+				std::cout << "\nInvalid input, operation aborted";
+				break;
+			}
+
+			switch (choice)
+			{
+			case 1:
+				current->score_1 = newScore;
+				break;
+			case 2:
+				current->score_2 = newScore;
+				break;
+			case 3:
+				current->score_3 = newScore;
+				break;
+			}
+
+			current->average = (current->score_1 + current->score_2 + current->score_3) / 3;
+
+			break;
+		}
+
+		current = current->next;
+	}
+	
+	return exists;
+
+}
 
 void Records::printRecords()
 {
+	nodePtr current;
+
 	current = head;
 
 	while (current != NULL)
@@ -97,6 +191,35 @@ void Records::printRecords()
 
 		current = current->next;
 	}
+}
+
+bool Records::displayRecord(int record_id)
+{
+	nodePtr current = head;
+
+	if (!current)
+	{
+		return false;
+	}
+	
+	bool exists = false;
+
+	while (current != NULL)
+	{
+		if (current->id == record_id)
+		{
+			exists = true;
+			std::cout << "\nStudent name: " << current->name << std::endl;
+			std::cout << "\nScore 1: " << current->score_1;
+			std::cout << "\tScore 2: " << current->score_2;
+			std::cout << "\tScore 3: " << current->score_3 << "\n\n";
+			break;
+		}
+
+		current = current->next;
+	}
+
+	return exists;
 }
 
 /// <summary>
@@ -115,4 +238,23 @@ int Records::generateId()
 	std::uniform_int_distribution<std::mt19937::result_type> dist(100, 999);
 
 	return (dist(rng));
+}
+
+int Records::locateId(int id)
+{
+	nodePtr current = new node;
+
+	if (!head)
+	{
+		return -1;
+	}
+
+	int index = 0;
+
+	while (current != NULL && current->id != id)
+	{
+		index++;
+	}
+
+	return index;
 }
